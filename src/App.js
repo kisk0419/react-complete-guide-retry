@@ -5,16 +5,16 @@ import Person from './Person/Person'
 class App extends Component {
   state = {
     persons: [
-      { name: 'Max', age: 28 },
-      { name: 'Menu', age: 29 },
-      { name: 'Stephanie', age: 26 }
+      { id: '012345', name: 'Max', age: 28 },
+      { id: '012346', name: 'Menu', age: 29 },
+      { id: '012347', name: 'Stephanie', age: 26 }
     ],
     otherState: 'some other values',
     showPersons: false
   }
 
   deletePersonHandler = (personIdex) => {
-    const persons = this.state.persons;
+    const persons = [...this.state.persons];
     persons.splice(personIdex, 1);
     this.setState({persons: persons});
   }
@@ -51,6 +51,7 @@ class App extends Component {
           {
             this.state.persons.map((person, index) => {
               return <Person 
+                key={person.id}
                 click={() => this.deletePersonHandler(index)} 
                 name={person.name} 
                 age={person.age} />

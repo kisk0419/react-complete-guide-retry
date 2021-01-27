@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import styled from 'styled-components';
 
 import classes from './App.css';
-import Person from './Person/Person'
+import Person from './Person/Person';
 
 
 class App extends Component {

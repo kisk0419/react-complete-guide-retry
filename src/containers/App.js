@@ -3,6 +3,9 @@ import React, { Component } from 'react';
 import classes from './App.css';
 import Persons from '../components/Persons/Persons';
 import Cockpit from '../components/Cockpit/Cockpit';
+import WithClass from '../hoc/WithClass';
+import withClass2 from '../hoc/withClass2';
+import Aux from '../hoc/Auxilliary';
 
 class App extends Component {
   
@@ -20,6 +23,7 @@ class App extends Component {
     otherState: 'some other values',
     showPersons: false,
     showCockpit: true,
+    changeCounter: 0,
   }
 
   static getDerivedStateFromProps(props, state) {
@@ -61,8 +65,12 @@ class App extends Component {
     const persons = [...this.state.persons];
     persons[personIndex] = person;
 
-    this.setState({
-      persons: persons
+    // So important to use old state
+    this.setState((prevState, props) => {
+      return {
+        persons: persons,
+        changeCounter: prevState.changeCounter + 1,
+      };
     });
   }
 
@@ -83,7 +91,8 @@ class App extends Component {
     }
 
     return (
-      <div className={classes.App}>
+      //<WithClass classes={classes.App}>
+      <Aux>
         <button onClick={() => {this.setState({showCockpit: false})}}>delete cockpit</button>
         {this.state.showCockpit ? <Cockpit 
           title={this.props.appTitle}
@@ -92,9 +101,9 @@ class App extends Component {
           clicked={this.togglePersonsHandler}
         /> : null}
         {persons}
-        </div>
+      </Aux>
     );
   }
 }
 
-export default App;
+export default withClass2(App, classes.App);
